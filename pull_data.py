@@ -26,8 +26,17 @@ def requests_retry_session(
     session.mount('https://', adapter)
     return session
 
-stations_get = requests_retry_session().get('https://gbfs.velobixi.com/gbfs/2-2/en/station_information.json')
-status_get = requests_retry_session().get('https://gbfs.velobixi.com/gbfs/2-2/en/station_status.json')
+dbinfourl = 'https://apis.deutschebahn.com/db-api-marketplace/apis/shared-mobility-gbfs/v2/de/StadtRadHamburg/station_information' #station info url for StadtRAD data
+dbstatusurl = 'https://apis.deutschebahn.com/db-api-marketplace/apis/shared-mobility-gbfs/v2/de/StadtRadHamburg/station_status' #station status url for StadtRAD data
+
+dbheaders = { #headers/credentials for getting StadtRAD data
+    "DB-Client-ID": "8159330664c345a6d14fe447cf9e0908",
+    "DB-Api-Key": "5baec41cbc3503027f3e12ad8c7c3e35",
+    "accept": "application/json"
+}
+
+stations_get = requests_retry_session().get(dbinfourl, headers = dbheaders)
+status_get = requests_retry_session().get(dbstatusurl, headers = dbheaders)
 
 status_get.raise_for_status() # should raise error and end execution if there was a connection error
 
