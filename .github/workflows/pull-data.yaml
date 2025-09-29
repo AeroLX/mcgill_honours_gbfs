@@ -1,7 +1,7 @@
 name: pull data
 
 on:
-  delete
+- cron: '45 * * * *'
 
 jobs:
   get:
