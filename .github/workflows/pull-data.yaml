@@ -1,6 +1,7 @@
 name: pull data
 
 on:
+schedule:
 - cron: '45 * * * *'
 
 jobs:
